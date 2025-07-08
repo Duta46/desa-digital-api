@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Traits\UUID;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, UUID, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,4 +47,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function headOfFamily()
+    {
+        return $this->hasOne(HeadOfFamily::class);
+    }
+
+    public function familyMembers()
+    {
+        return $this->hasOne(FamilyMember::class);
+    }
+
+    public function DevelopmentApplicats()
+    {
+        return $this->hasMany(DevelopmentApplicat::class);
+    }
+
+
 }
